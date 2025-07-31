@@ -9,7 +9,7 @@ function SelectManufacturer({
   return (
     <div>
       <select
-        className="h-12 w-40 rounded-lg border-2 bg-gray-200  md:h-14 md:w-96"
+        className="h-8 w-36 rounded-lg border-2 bg-gray-200  md:h-14 md:w-96"
         id="select"
         value={manufacturer}
         onChange={(e) => {

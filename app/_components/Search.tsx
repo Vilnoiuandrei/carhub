@@ -30,10 +30,10 @@ function Search({ children, query, setQuery }: SearchProps) {
   }, [inputEl]);
 
   return (
-    <div className="flex  h-20 items-center justify-center bg-red-800 text-lg md:h-20 md:text-2xl">
+    <div className="flex  h-12 items-center justify-center bg-red-800 text-lg md:h-20 md:text-2xl">
       {children}
       <input
-        className=" ml-5 h-12 w-72 rounded-lg border-2 bg-gray-200 text-3xl text-red-800 md:h-14 md:w-96"
+        className=" ml-5 h-8 w-46 text-xl rounded-lg border-2 bg-gray-200 md:text-3xl text-red-800 md:h-14 md:w-96"
         id="search"
         placeholder="Search car model.."
         type="text"

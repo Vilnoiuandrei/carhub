@@ -7,7 +7,7 @@ function Sort({ sort, setSort }: SortProps) {
   return (
     <div>
       <select
-        className="mr-4 h-12 w-8 rounded-lg border-2 bg-gray-200  md:h-14 md:w-8"
+        className="mr-4 h-8 w-8 rounded-lg border-2 bg-gray-200  md:h-14 md:w-8"
         id="sort"
         value={sort}
         onChange={(e) => {
