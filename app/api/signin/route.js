@@ -23,6 +23,7 @@ export async function POST(req) {
     name: userData.name,
     email: userData.email,
     password: hashedPassword,
+    role: "user",
     createdAt: new Date(),
   };
   const result = await db.collection("users").insertOne(newUser);
