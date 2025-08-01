@@ -1,32 +1,37 @@
 "use client";
-import { FcGoogle } from "react-icons/fc";
-import { signIn } from "next-auth/react";
-import { Inter } from "next/font/google";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 import SignOut from "../_components/SignOut";
-
-const inter = Inter({ subsets: ["latin"], weight: "400", display: "swap" });
 
 export default function SignIn() {
   const { data: session } = useSession();
   const [error, setError] = useState("");
+  const [email, setEmail] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const handleContinue = () => {
+    if (email.trim()) {
+      setShowPassword(true);
+    } else {
+      emailRef.current?.focus();
+    }
+  };
 
   const handleEmailSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
     const result = await signIn("credentials", {
       redirect: false,
       email,
       password,
       callbackUrl: "/",
     });
+
     if (result?.error === null) {
-      // Successful sign-in
       window.location.href = "/";
     }
 
@@ -36,71 +41,87 @@ export default function SignIn() {
   };
 
   return (
-    <div>
-      {/* Check if the user is already logged in */}
-      {session && (
-        <div className="flex items-center justify-center min-h-screen flex-col text-2xl text-gray-200">
+    <div className="flex items-center justify-center min-h-screen bg-gray-950 text-white px-4">
+      {session ? (
+        <div className="flex flex-col items-center text-2xl">
           <p>You are logged in.</p>
           <Link
             href="/cars"
-            className=" text-4xl text-gray-200 w-80 h-16 border-2 border-red-500 text-center p-2 rounded-md mt-4 flex items-center justify-center gap-2 hover:bg-red-500 transition-all duration-500 ease-out"
+            className="text-4xl w-80 h-16 border-2 border-red-500 text-center p-2 rounded-md mt-4 flex items-center justify-center gap-2 hover:bg-red-500 transition-all duration-500"
           >
             Go to Cars
           </Link>
           <SignOut />
         </div>
-      )}
+      ) : (
+        <div className="flex flex-col items-center w-full max-w-sm">
+          <p className="text-xl text-gray-200 mb-4">
+            Please log in to view your account.
+          </p>
 
-      {/* If not logged in, show the sign-in form */}
-      {!session && (
-        <div className="flex items-center justify-center min-h-screen flex-col text-2xl">
-          <p>Please log in to view your account.</p>
-          {error && <p className="text-red-500 mt-4">{error}</p>}
+          {error && <p className="text-red-500 mt-1">{error}</p>}
 
           {/* Google Sign In */}
           <button
-            className="mt-5 h-16 w-80 shadow-md rounded-sm text-xl border-2 border-gray-300 relative flex items-center justify-center"
+            className="mb-4 h-14 w-full shadow-md border-2 rounded-sm text-xl text-gray-900 bg-gray-200  border-red-600 flex items-center justify-center relative hover:bg-gray-100 transition"
             onClick={() => signIn("google", { callbackUrl: "/" })}
           >
-            <p className={`${inter.className} text-3xl tracking-normal`}>
-              Google
-            </p>
-            <FcGoogle className="h-8 w-8 absolute right-3" />
+            <p className="text-2xl">Google</p>
+            <FcGoogle className="h-7 w-7 absolute right-4" />
           </button>
-          <p className="p-2">or</p>
+
+          {/* Divider */}
+          <p className="text-gray-400 mb-2">or</p>
 
           {/* Email Sign In */}
           <form
             onSubmit={handleEmailSignIn}
-            className="flex flex-col items-center border-2 border-gray-300 p-4 rounded-md"
+            className="flex flex-col w-full gap-4"
           >
             <input
               type="email"
-              name="email"
               placeholder="Email"
+              name="email"
+              ref={emailRef}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
               required
-              className="p-2 border-b-2 border-gray-300 focus:outline-none focus:border-red-600 mt-4 w-72"
             />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              className="p-2 border-b-2 border-gray-300 focus:outline-none focus:border-red-600 mt-4 w-72"
-            />
-            <button
-              type="submit"
-              className="mt-5 h-14 w-72 shadow-md rounded-sm bg-black border-red-600 border-2 text-white hover:bg-red-600 transition-all duration-500 ease-out"
-            >
-              Sign In with Email
-            </button>
+
+            {showPassword ? (
+              <>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="h-12 rounded-lg bg-red-600 hover:bg-red-500 transition text-white font-semibold"
+                >
+                  Sign In
+                </button>
+              </>
+            ) : (
+              <button
+                type="button"
+                onClick={handleContinue}
+                className="h-12 rounded-lg bg-red-600 hover:bg-red-500 transition text-white font-semibold"
+              >
+                Continue with Email
+              </button>
+            )}
           </form>
 
-          {/* Link to Registration Page */}
-          <p className="mt-4">
+          <p className="mt-4 text-gray-400 text-lg md:text-xl">
             Don&apos;t have an account?{" "}
-            <Link href="/signin" className="text-red-500 hover:underline">
-              Sign Up
+            <Link href="/signin" className="text-red-400 hover:underline">
+              Sign up
             </Link>
           </p>
         </div>

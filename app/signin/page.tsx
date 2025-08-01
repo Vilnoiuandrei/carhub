@@ -73,29 +73,35 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white px-4">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-4 p-6 bg-gray-800 rounded-lg shadow-lg w-80 text-xl"
+        className="w-full max-w-sm flex flex-col gap-5 p-6 bg-gray-900 rounded-2xl shadow-xl border border-gray-800 text-base"
       >
-        <h1 className="text-2xl font-bold">Sign in</h1>
-        {error && <p className="text-red-500">{error}</p>}
+        <h1 className="text-3xl font-semibold text-center text-white">
+          Sign Up
+        </h1>
+
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
         <input
           type="text"
           placeholder="Name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           required
-          className="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
         />
+
         <input
           type="email"
           placeholder="Email"
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           required
-          className="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
         />
+
         <input
           type="password"
           placeholder="Password"
@@ -104,8 +110,9 @@ export default function SigninPage() {
             setFormData({ ...formData, password: e.target.value })
           }
           required
-          className="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
         />
+
         <input
           type="password"
           placeholder="Confirm Password"
@@ -114,13 +121,14 @@ export default function SigninPage() {
             setFormData({ ...formData, confirmPassword: e.target.value })
           }
           required
-          className="p-2 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 placeholder-gray-400"
         />
+
         <button
           type="submit"
-          className="bg-red-600 hover:bg-red-500 text-white font-bold py-2 px-4 rounded transition duration-300"
+          className="bg-red-600 hover:bg-red-500 text-white font-semibold py-3 rounded-lg transition duration-300"
         >
-          Create account
+          Create Account
         </button>
       </form>
     </div>
