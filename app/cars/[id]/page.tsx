@@ -64,34 +64,51 @@ function CarDetailPage() {
   }
 
   return (
-    <div>
-      <div className=" align flex h-12 items-center justify-center bg-red-700 md:h-20">
-        <h1 className="text-b    text-center text-2xl font-bold md:text-5xl">{`${car.manufacturer} ${car.model} ${car.variant}`}</h1>
+    <div className="min-h-screen bg-black text-white ">
+      {/* Title Header */}
+      <div className="flex items-center justify-center bg-red-700 h-16 md:h-24 shadow-md">
+        <h1 className="text-center text-2xl md:text-4xl font-extrabold tracking-wider">
+          {`${car.manufacturer} ${car.model} ${car.variant}`}
+        </h1>
       </div>
 
-      <div className="flex justify-center">
-        <div className="grid max-w-1500px  grid-cols-2">
-          <div className="w-ws col-start-1 col-end-3 row-start-1 flex justify-center">
+      {/* Content Grid */}
+      <div className="flex justify-center px-4 py-10">
+        <div className="grid w-full  grid-cols-1  gap-6">
+          {/* Main Image */}
+          <div className="w-full rounded-lg overflow-hidden border-2 border-red-700 shadow-lg">
             <Image
-              className="border-2"
+              className="w-full h-auto object-cover"
               src={`/${car.imageCover}`}
               alt={`${car.manufacturer}${car.model}poster`}
               width={1000}
               height={1000}
             />
           </div>
-          {car.images.map((image: string, index: number) => (
-            <Image
-              key={index}
-              src={`/${image}`}
-              width={500}
-              height={500}
-              alt={`Photo ${index + 1}`}
-              className="col-start-1  col-end-3  mt-4 w-full border border-gray-800 shadow-lg lg:col-auto"
-            />
-          ))}
-          <CarDesciption car={car} />
-          <Specifications car={car} />
+
+          {/* Car Description & Specs */}
+          <div className="flex flex-col gap-6">
+            <CarDesciption car={car} />
+            <Specifications car={car} />
+          </div>
+
+          {/* Additional Images (Full width grid) */}
+          <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pb-5">
+            {car.images.map((image: string, index: number) => (
+              <div
+                key={index}
+                className="rounded-md overflow-hidden border border-gray-800 bg-gray-900 shadow-md"
+              >
+                <Image
+                  src={`/${image}`}
+                  width={600}
+                  height={400}
+                  alt={`Photo ${index + 1}`}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

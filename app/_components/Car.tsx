@@ -23,24 +23,31 @@ export default function Car({ car }: CarProps) {
   const { data: session } = useSession();
 
   return (
-    <li key={car._id} className="relative">
+    <li key={car._id} className=" w-full max-w-md mx-auto">
       <Link
         href={`/cars/${car._id}`}
-        className="flex h-96  w-screen cursor-pointer flex-col  items-center justify-center border-4 border-black bg-black text-white  lg:w-full"
+        className="group relative flex h-[28rem] w-full flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-black text-white shadow-xl transition duration-300 hover:scale-[1.02] hover:shadow-red-700/40 border border-gray-800"
       >
-        <Image
-          className="h-5/6 w-full object-cover"
-          src={`/${car.imageCover}`}
-          alt={`${car.manufacturer}${car.model}poster`}
-          width={500}
-          height={500}
-        />
+        <div className="relative h-4/5 w-full">
+          <Image
+            src={`/${car.imageCover}`}
+            alt={`${car.manufacturer} ${car.model} poster`}
+            fill
+            className="object-cover brightness-[0.85] transition duration-300 group-hover:brightness-100"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+        </div>
 
-        <h3 className=" flex justify-center text-2xl md:text-3xl">
-          {`${car.manufacturer} ${car.model} ${car.variant} ${car.year}`}
-        </h3>
-
-        {session?.user && <LikeButton car={car} />}
+        <div className=" mt-auto p-4 text-center flex flex-row items-center justify-between gap-1">
+          <h3 className="text-xl md:text-2xl font-bold tracking-wide text-white drop-shadow-md">
+            {`${car.manufacturer} ${car.model} ${car.variant} ${car.year}`}
+          </h3>
+          {session?.user && (
+            <div className="">
+              <LikeButton car={car} />
+            </div>
+          )}
+        </div>
       </Link>
     </li>
   );

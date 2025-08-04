@@ -101,7 +101,7 @@ export default function LikeButton({ car }: CarProps) {
 
   return (
     <div
-      className="absolute bottom-2 right-2 mb-1 mr-2 flex text-4xl text-red-800"
+      className=" bottom-2 right-2 mb-1 mr-2 flex text-4xl text-red-800"
       onClick={handleLike}
     >
       <p className="mr-2">{likesCount}</p>

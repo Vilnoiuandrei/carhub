@@ -18,7 +18,7 @@ interface CarListPropos {
 export default function CarList({ cars }: CarListPropos) {
   return (
     <div className="flex  items-center justify-center ">
-      <ul className="list mb-20 grid-cols-2  justify-center lg:grid lg:w-full xl:grid-cols-3 2xl:grid-cols-4">
+      <ul className="list mb-20 grid-cols-2 space-y-6 space-x-0.5  justify-center lg:grid lg:w-full xl:grid-cols-3 2xl:grid-cols-4">
         {cars?.map((car) => (
           <Car key={car._id} car={car} />
         ))}
